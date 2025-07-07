@@ -1,82 +1,78 @@
 #question 1: elementary signal generation
 
 #sine : sin(ωn) cos : cos(ωn) unit step : u(n) unit ramp step : nu(n) exponential : a^nu(n)
-
 import numpy as np
 import matplotlib.pyplot as plt
 
-np.random.seed(42)    #fixed random value
+np.random.seed(42)  # fixed random value
 
-n=np.arange(-10, 11, 1)     #range -10 to 10, increment 1
-u_n =np.where(n>=0, 1, 0)   #where unit step = 1, if n>=1 else 0
+n = np.arange(-10, 11, 1)  # n = -10 to 10
+u_n = np.where(n >= 0, 1, 0)  # unit step: u(n)
 
-#plot(u,u_n)
-plt.stem(n, u_n, label="unit step sequence")
-plt.title("unit step sequence")
-plt.xlabel("n")
-plt.ylabel("u_n")
-plt.legend()
-plt.grid()
-plt.show()
+ramp = np.where(n < 0, 0, n)  # unit ramp: n·u(n)
 
-n =  np.arange(-10, 11, 1)
-ramp = np.where(n<0, 0, n)
-
-plt.scatter(n, ramp, label="Ramp sequence")
-plt.stem(n, ramp)
-plt.title("Ramp Sequence")
-plt.xlabel("n")
-plt.ylabel("r(n)")
-
-plt.legend(loc='best')    #for label position show
-
-plt.grid(True)
-plt.show()
-
+# Exponential signal
 A = 1
 b = 0.5
-t =  np.linspace(0, 10, 50)     #np.linspace(start, stop, num)  (stop)included
-y = A * np.exp(b * t)
+t = np.linspace(0, 10, 50)
+exp_y = A * np.exp(b * t)
 
-plt.stem(t, y)
-plt.title("Exponential function")
-plt.xlabel("Time (1)")
-plt.ylabel('y(t)')
+# Sine and cosine
+x = np.linspace(0, 2 * np.pi, 1000)
+sine_y = np.sin(x)
+cos_y = np.cos(x)
 
+# Create figure and subplots
+plt.figure(figsize=(14, 10))
+
+# --- Subplot 1: Unit Step ---
+plt.subplot(3, 2, 1)
+plt.stem(n, u_n)
+plt.title("Unit Step Sequence u(n)")
+plt.xlabel("n")
+plt.ylabel("u(n)")
 plt.grid(True)
+
+# --- Subplot 2: Ramp ---
+plt.subplot(3, 2, 2)
+plt.stem(n, ramp)
+plt.title("Ramp Sequence n·u(n)")
+plt.xlabel("n")
+plt.ylabel("r(n)")
+plt.grid(True)
+
+# --- Subplot 3: Exponential ---
+plt.subplot(3, 2, 3)
+plt.stem(t, exp_y)
+plt.title("Exponential Signal: $A·e^{bt}$")
+plt.xlabel("t")
+plt.ylabel("Amplitude")
+plt.grid(True)
+
+# --- Subplot 4: Sine Wave ---
+plt.subplot(3, 2, 4)
+plt.plot(x, sine_y, color='green', label='Sine')
+#plt.stem(x,sine_y)
+plt.axhline(0, color='black')
+plt.title("Sine Wave: sin(x)")
+plt.xlabel("x")
+plt.ylabel("Amplitude")
+plt.grid(True)
+plt.legend()
+
+# --- Subplot 5: Cosine Wave ---
+plt.subplot(3, 2, 5)
+plt.plot(x, cos_y, color='red', label='Cosine')
+plt.axhline(0, color='black')
+plt.axvline(np.pi, color='gray', linestyle='--', label='x=π')
+plt.title("Cosine Wave: cos(x)")
+plt.xlabel("x")
+plt.ylabel("Amplitude")
+plt.grid(True)
+plt.legend()
+
+# Adjust layout
+plt.tight_layout()
 plt.show()
 
-#y(t) = A × sin(2πft + φ)
-#y(t) = A × cos(2πft + φ)
 
-x = np.linspace(0, 2*np.pi, 1000)     # 1000 points between 0 and 2π
-A=4
-
-y1 = np.sin(x)
-y2 = np.cos(x)
-
-plt.figure(figsize=(15,4))      #figure size
-
-plt.subplot(2, 2, 1)
-plt.plot(x, y1, color='green', label='Sine Wave')
-plt.legend(loc='best')
-plt.title("Sive Wave")
-plt.xlabel('Time')
-plt.ylabel('Amplitude')
-
-plt.axhline(y = 0, color='red',)      #horizontal line
-
-plt.grid(True)
-plt.show()
-
-plt.subplot(2, 2, 2)
-plt.plot(x, y2, color='red', label='Cos Wave')
-plt.legend(loc='best')      #label show in position
-plt.title("Cos Wave")
-plt.xlabel('Time')
-plt.ylabel('Amplitude')
-
-plt.axhline(color='black',)      #horizontal line, default position y=0
-plt.axvline(color='black')       #vertical line
-plt.grid(True)
-plt.show()
