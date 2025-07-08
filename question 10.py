@@ -1,3 +1,9 @@
+'''
+Design a low pass FIR filter to remove high-frequency noise from a signal using 
+convolution.
+
+'''
+
 
 import numpy as np
 import matplotlib.pyplot as plt
